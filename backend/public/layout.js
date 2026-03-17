@@ -26,7 +26,7 @@
   const header = `
   <header>
     <a href="index.html" class="logo">🔒 Tulpar Kilit</a>
-    <nav>${token && user.email ? userNav : guestNav}</nav>
+    <nav>${token ? userNav : guestNav}</nav>
   </header>`;
 
   const footer = `

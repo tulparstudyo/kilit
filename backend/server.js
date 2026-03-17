@@ -166,7 +166,7 @@ app.post('/login', async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
-    res.json({ token, user: { id: user.id, name: user.name, phone: user.phone } });
+    res.json({ token, user: { id: user.id, name: user.name, phone: user.phone, email: user.email } });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Sunucu hatası' });
