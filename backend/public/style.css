@@ -106,7 +106,7 @@ main {
   max-width: 480px;
 }
 
-.card-wide { max-width: 640px; }
+.card-wide { max-width: 90%; }
 
 .card h2 {
   color: var(--navy);
