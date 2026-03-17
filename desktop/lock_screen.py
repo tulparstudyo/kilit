@@ -285,7 +285,7 @@ class LockScreen(Gtk.Window):
         except:
             pass
 
-    def _write_state(self, locked):
+    def _write_state(self, locked, duration_minutes=None):
         """Kilit durumunu state dosyasına yaz (launcher okur)."""
         import json, time, os
         state_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".lock_state.json")
@@ -293,10 +293,11 @@ class LockScreen(Gtk.Window):
             if locked:
                 data = {"locked": True}
             else:
+                dur = duration_minutes if duration_minutes is not None else self.unlock_duration
                 data = {
                     "locked": False,
                     "unlock_time": time.time(),
-                    "duration_minutes": self.unlock_duration,
+                    "duration_minutes": dur,
                 }
             with open(state_path, "w") as f:
                 json.dump(data, f)
@@ -310,7 +311,7 @@ class LockScreen(Gtk.Window):
             self._qr_refresh_timer_id = None
         self._release_grabs()
         self.hide()
-        self._write_state(locked=False)
+        self._write_state(locked=False, duration_minutes=duration_minutes)
         self._relock_timer_id = GLib.timeout_add_seconds(
             duration_minutes * 60, self.lock_screen
         )

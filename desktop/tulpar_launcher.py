@@ -96,13 +96,19 @@ class LauncherWindow(Gtk.Window):
         self._timer_id = GLib.timeout_add_seconds(1, self._update_timer)
 
     def _update_timer(self):
-        """Kalan süreyi SS:DD formatında güncelle."""
+        """Kalan süreyi SS:DD:SS formatında güncelle."""
         remaining = read_remaining()
         if remaining is not None and remaining > 0:
-            hours = int(remaining) // 3600
-            minutes = (int(remaining) % 3600) // 60
+            total = int(remaining)
+            hours = total // 3600
+            minutes = (total % 3600) // 60
+            seconds = total % 60
+            if hours > 0:
+                text = f'{hours:02d}:{minutes:02d}:{seconds:02d}'
+            else:
+                text = f'{minutes:02d}:{seconds:02d}'
             self.timer_label.set_markup(
-                f'<span size="large" color="#2ecc71">Kalan süre: {hours:02d}:{minutes:02d}</span>'
+                f'<span size="large" color="#2ecc71">Kalan süre: {text}</span>'
             )
         elif remaining is not None and remaining <= 0:
             self.timer_label.set_markup(
