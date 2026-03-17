@@ -100,6 +100,32 @@ class LockScreen(Gtk.Window):
         box.pack_start(self.offline_status, False, False, 0)
         # --- /Offline unlock bölümü ---
 
+        # --- Bilgisayarı kapat düğmesi ---
+        shutdown_btn = Gtk.Button(label="⏻ Bilgisayarı Kapat")
+        shutdown_btn.connect("clicked", self._on_shutdown)
+        shutdown_btn.set_halign(Gtk.Align.CENTER)
+        shutdown_btn.set_size_request(200, -1)
+        # Kırmızımsı soluk stil
+        shutdown_css = Gtk.CssProvider()
+        shutdown_css.load_from_data(b"""
+        button.shutdown-btn {
+            background: rgba(239, 68, 68, 0.25);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        button.shutdown-btn:hover {
+            background: rgba(239, 68, 68, 0.5);
+            color: white;
+        }
+        """)
+        shutdown_btn.get_style_context().add_class("shutdown-btn")
+        shutdown_btn.get_style_context().add_provider(shutdown_css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+        box.pack_start(shutdown_btn, False, False, 12)
+        # --- /Bilgisayarı kapat ---
+
         css = b"""
         window { background-color: #2c3e50; }
         label  { color: white; }
@@ -177,6 +203,12 @@ class LockScreen(Gtk.Window):
         else:
             self.offline_status.set_markup('<span color="red">✗ Hatalı key</span>')
             self.key_entry.set_text("")
+
+    def _on_shutdown(self, *_):
+        """Bilgisayarı onaysız kapat"""
+        import subprocess
+        self._release_grabs()
+        subprocess.Popen(["systemctl", "poweroff", "-i"])
 
 
     def generate_qr(self):
