@@ -70,12 +70,14 @@
 
         <div id="tab-users" class="tab-content active">
           <div id="usersLoading" class="msg msg-info">Yükleniyor...</div>
-          <table class="user-table" id="usersTable" style="display:none">
-            <thead>
-              <tr><th>E-posta</th><th>Telefon</th><th>Kilit Açma</th><th>Kayıt Tarihi</th></tr>
-            </thead>
-            <tbody id="usersBody"></tbody>
-          </table>
+          <div class="responsive-table">
+            <table class="user-table m-card-table" id="usersTable" style="display:none">
+              <thead>
+                <tr><th>E-posta</th><th>Telefon</th><th>Kilit Açma</th><th>Kayıt Tarihi</th></tr>
+              </thead>
+              <tbody id="usersBody"></tbody>
+            </table>
+          </div>
           <div id="noUsers" class="msg msg-info" style="display:none">Henüz kayıtlı kullanıcı yok.</div>
         </div>
 
@@ -174,15 +176,15 @@
         table.style.display = 'table';
         tbody.innerHTML = users.map(u => `
           <tr>
-            <td>${u.email}</td>
-            <td>${u.phone}</td>
-            <td>
+            <td data-label="E-posta">${u.email}</td>
+            <td data-label="Telefon">${u.phone}</td>
+            <td data-label="Kilit Açma">
               <button class="toggle-btn ${u.has_unlock_permission ? 'toggle-on' : 'toggle-off'}"
                       onclick="togglePermission(${u.id}, this)">
                 ${u.has_unlock_permission ? 'Açık' : 'Kapalı'}
               </button>
             </td>
-            <td>${new Date(u.created_at).toLocaleDateString('tr-TR')}</td>
+            <td data-label="Kayıt Tarihi">${new Date(u.created_at).toLocaleDateString('tr-TR')}</td>
           </tr>
         `).join('');
       } catch {

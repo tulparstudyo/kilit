@@ -248,4 +248,45 @@ footer a { color: var(--teal); }
 @media (max-width: 600px) {
   nav a, nav button { padding: 8px 10px; font-size: 1.1em; }
   .nav-label { display: none; }
+  .card { padding: 20px 16px; }
+  .card-wide { max-width: 100%; }
+  main { padding: 20px 8px; }
+}
+
+/* ── Responsive table ── */
+.responsive-table {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .m-card-table thead { display: none; }
+  .m-card-table,
+  .m-card-table tbody,
+  .m-card-table tr,
+  .m-card-table td { display: block; width: 100%; }
+  .m-card-table tr {
+    background: var(--white);
+    border: 1px solid var(--gray-l);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .m-card-table td {
+    padding: 4px 0;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .95em;
+  }
+  .m-card-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--navy);
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  .m-card-table td:empty { display: none; }
 }

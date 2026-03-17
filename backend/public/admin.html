@@ -78,8 +78,8 @@
       <button class="btn btn-primary" onclick="loadInstitutions(1)">Ara</button>
     </div>
 
-    <div class="table-wrap">
-      <table class="inst-table">
+    <div class="table-wrap responsive-table">
+      <table class="inst-table m-card-table">
         <thead>
           <tr>
             <th>Kurum Adı</th>
@@ -214,12 +214,12 @@
 
         tbody.innerHTML = data.results.map(i => `
           <tr>
-            <td>${i.name}</td>
-            <td><code>${i.institution_code}</code></td>
-            <td>${i.il_adi || '-'}</td>
-            <td>${i.ilce_adi || '-'}</td>
-            <td><span class="badge ${i.is_verified ? 'badge-active' : 'badge-inactive'}">${i.is_verified ? 'Aktif' : 'Pasif'}</span></td>
-            <td>
+            <td data-label="Kurum Adı">${i.name}</td>
+            <td data-label="Kod"><code>${i.institution_code}</code></td>
+            <td data-label="İl">${i.il_adi || '-'}</td>
+            <td data-label="İlçe">${i.ilce_adi || '-'}</td>
+            <td data-label="Durum"><span class="badge ${i.is_verified ? 'badge-active' : 'badge-inactive'}">${i.is_verified ? 'Aktif' : 'Pasif'}</span></td>
+            <td data-label="İşlem">
               ${i.is_verified
                 ? `<button class="action-btn btn-deactivate" onclick="deactivate('${i.institution_code}','${i.name.replace(/'/g,"\\'")}')">Deaktif Et</button>`
                 : `<button class="action-btn btn-activate" onclick="openActivate('${i.institution_code}','${i.name.replace(/'/g,"\\'")}')">Aktif Et</button>`
